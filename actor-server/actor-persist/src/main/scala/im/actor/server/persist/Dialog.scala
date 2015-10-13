@@ -2,10 +2,9 @@ package im.actor.server.persist
 
 import scala.concurrent.ExecutionContext
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
+import im.actor.server.db.ActorPostgresDriver.api._
 import org.joda.time.DateTime
 import slick.dbio.Effect.{ Read, Write }
-import slick.driver.PostgresDriver.api._
 import slick.profile.{ SqlAction, FixedSqlStreamingAction, FixedSqlAction }
 
 import im.actor.server.models

@@ -1,10 +1,8 @@
 package im.actor.server.persist
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
-import org.joda.time.DateTime
-import slick.driver.PostgresDriver.api._
-
+import im.actor.server.db.ActorPostgresDriver.api._
 import im.actor.server.models
+import org.joda.time.DateTime
 
 class GroupInviteTokenTable(tag: Tag) extends Table[models.GroupInviteToken](tag, "group_invite_tokens") {
   def groupId = column[Int]("group_id", O.PrimaryKey)
@@ -23,11 +21,17 @@ object GroupInviteToken {
 
   val activeTokens = groupInviteTokens.filter(_.revokedAt.isEmpty)
 
+  def activeByGroupIdUserId(groupId: Rep[Int], userId: Rep[Int]) = activeTokens.filter(t ⇒ t.groupId === groupId && t.creatorId === userId)
+  val activeByGroupIdUserIdC = Compiled(activeByGroupIdUserId _)
+
+  def byToken(token: Rep[String]) = activeTokens.filter(_.token === token)
+  val byTokenC = Compiled(byToken _)
+
   def find(groupId: Int, userId: Int) =
-    activeTokens.filter(t ⇒ t.groupId === groupId && t.creatorId === userId).result
+    activeByGroupIdUserIdC((groupId, userId)).result
 
   def findByToken(token: String) =
-    activeTokens.filter(_.token === token).result.headOption
+    byTokenC(token).result.headOption
 
   def revoke(groupId: Int, userId: Int) =
     activeTokens.filter(t ⇒ t.groupId === groupId && t.creatorId === userId).map(_.revokedAt).update(Some(DateTime.now))

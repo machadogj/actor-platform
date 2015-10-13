@@ -1,13 +1,10 @@
 package im.actor.server.persist
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
-import org.joda.time.DateTime
-import slick.dbio.Effect.{ Write, Read }
-import slick.driver.PostgresDriver
-import slick.driver.PostgresDriver.api._
-import slick.profile.{ SqlAction, FixedSqlStreamingAction, FixedSqlAction }
-
+import im.actor.server.db.ActorPostgresDriver.api._
 import im.actor.server.models
+import org.joda.time.DateTime
+import slick.dbio.Effect.{ Read, Write }
+import slick.profile.{ FixedSqlAction, FixedSqlStreamingAction, SqlAction }
 
 class HistoryMessageTable(tag: Tag) extends Table[models.HistoryMessage](tag, "history_messages") {
   def userId = column[Int]("user_id", O.PrimaryKey)
@@ -110,7 +107,7 @@ object HistoryMessage {
       .map(m ⇒ (m.messageContentHeader, m.messageContentData))
       .update((messageContentHeader, messageContentData))
 
-  def getUnreadCount(userId: Int, peer: models.Peer, lastReadAt: DateTime, noServiceMessages: Boolean = false): FixedSqlAction[Int, PostgresDriver.api.NoStream, Read] =
+  def getUnreadCount(userId: Int, peer: models.Peer, lastReadAt: DateTime, noServiceMessages: Boolean = false): FixedSqlAction[Int, NoStream, Read] =
     (if (noServiceMessages) withoutServiceMessages else notDeletedMessages)
       .filter(m ⇒ m.userId === userId && m.peerType === peer.typ.toInt && m.peerId === peer.id)
       .filter(m ⇒ m.date > lastReadAt && m.senderUserId =!= userId)

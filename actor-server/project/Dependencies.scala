@@ -52,7 +52,6 @@ object Dependencies {
     val postgresJdbc            = "org.postgresql"                %  "postgresql"                    % "9.4-1201-jdbc41" exclude("org.slf4j", "slf4j-simple")
     val slick                   = "com.typesafe.slick"            %% "slick"                         % V.slick
     val slickHikariCP           = "com.typesafe.slick"            %% "slick-hikaricp"                % V.slick
-    val slickJoda               = "com.github.tototoshi"          %% "slick-joda-mapper"             % "2.1.0"
     val slickPg                 = "com.github.tminglei"           %% "slick-pg"                      % V.slickPg
     val slickPgDate2            = "com.github.tminglei"           %% "slick-pg_date2"                % V.slickPg
     val slickPgJoda             = "com.github.tminglei"           %% "slick-pg_joda-time"            % V.slickPg
@@ -153,7 +152,7 @@ object Dependencies {
 
   val sessionMessages = Seq(akkaActor)
 
-  val persist = shared ++ Seq(akkaActor, apacheCommonsCodec, postgresJdbc, slick, slickHikariCP, slickJoda, slickPg, slickPgDate2, slickPgJoda, slickTestkit, flywayCore, hikariCP, jodaTime, jodaConvert)
+  val persist = shared ++ Seq(akkaActor, apacheCommonsCodec, postgresJdbc, slick, slickHikariCP, slickPg, slickPgDate2, slickPgJoda, slickTestkit, flywayCore, hikariCP, jodaTime, jodaConvert)
 
   val presences = shared :+ akkaContrib
 

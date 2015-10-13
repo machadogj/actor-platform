@@ -1,8 +1,7 @@
 package im.actor.server.persist
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
 import org.joda.time.DateTime
-import slick.driver.PostgresDriver.api._
+import im.actor.server.db.ActorPostgresDriver.api._
 
 import im.actor.server.models
 

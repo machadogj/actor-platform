@@ -2,11 +2,9 @@ package im.actor.server.persist
 
 import scala.concurrent.ExecutionContext
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
-import org.joda.time.DateTime
-import slick.driver.PostgresDriver.api._
-
+import im.actor.server.db.ActorPostgresDriver.api._
 import im.actor.server.models
+import org.joda.time.DateTime
 
 class AuthIdTable(tag: Tag) extends Table[models.AuthId](tag, "auth_ids") {
   def id = column[Long]("id", O.PrimaryKey)

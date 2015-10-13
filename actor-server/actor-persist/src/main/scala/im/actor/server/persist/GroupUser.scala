@@ -1,14 +1,12 @@
 package im.actor.server.persist
 
-import java.time.{ LocalDateTime, ZonedDateTime }
+import java.time.LocalDateTime
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
+import im.actor.server.db.ActorPostgresDriver.api._
+import im.actor.server.models
 import org.joda.time.DateTime
 import slick.dbio.Effect.Write
 import slick.profile.FixedSqlAction
-
-import im.actor.server.models
-import im.actor.server.db.ActorPostgresDriver.api._
 
 class GroupUsersTable(tag: Tag) extends Table[models.GroupUser](tag, "group_users") {
   def groupId = column[Int]("group_id", O.PrimaryKey)
@@ -32,10 +30,13 @@ object GroupUser {
   val groupUsersC = Compiled(groupUsers)
 
   def byPK(groupId: Rep[Int], userId: Rep[Int]) = groupUsers filter (g ⇒ g.groupId === groupId && g.userId === userId)
+
   def byGroupId(groupId: Rep[Int]) = groupUsers filter (_.groupId === groupId)
+
   def byUserId(userId: Rep[Int]) = groupUsers filter (_.userId === userId)
 
   def joinedAtByPK(groupId: Rep[Int], userId: Rep[Int]) = byPK(groupId, userId) map (_.joinedAt)
+
   def userIdByGroupId(groupId: Rep[Int]) = byGroupId(groupId) map (_.userId)
 
   val byPKC = Compiled(byPK _)

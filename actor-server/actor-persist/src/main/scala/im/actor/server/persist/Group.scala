@@ -1,10 +1,8 @@
 package im.actor.server.persist
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
-import org.joda.time.DateTime
-import slick.driver.PostgresDriver.api._
-
+import im.actor.server.db.ActorPostgresDriver.api._
 import im.actor.server.models
+import org.joda.time.DateTime
 
 class FullGroupTable(tag: Tag) extends Table[models.FullGroup](tag, "groups") {
   def id = column[Int]("id", O.PrimaryKey)

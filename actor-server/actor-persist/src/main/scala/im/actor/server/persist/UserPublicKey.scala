@@ -1,10 +1,8 @@
 package im.actor.server.persist
 
-import com.github.tototoshi.slick.PostgresJodaSupport._
-import org.joda.time.DateTime
-import slick.driver.PostgresDriver.api._
-
 import im.actor.server.models
+import im.actor.server.db.ActorPostgresDriver.api._
+import org.joda.time.DateTime
 
 class UserPublicKeyTable(tag: Tag) extends Table[models.UserPublicKey](tag, "public_keys") {
   def userId = column[Int]("user_id", O.PrimaryKey)
