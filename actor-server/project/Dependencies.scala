@@ -9,7 +9,8 @@ object Dependencies {
     val akkaExperimental = "1.0"
     val cats = "0.2.0"
     val scalaz = "7.1.1"
-    val slick = "3.0.3"
+    val slick = "3.1.0"
+    val slickPg = "0.10.0"
     val scalatest = "2.2.4"
     val shardakka = "0.1.8"
     val scalapbSer = "0.1.3"
@@ -50,8 +51,11 @@ object Dependencies {
 
     val postgresJdbc            = "org.postgresql"                %  "postgresql"                    % "9.4-1201-jdbc41" exclude("org.slf4j", "slf4j-simple")
     val slick                   = "com.typesafe.slick"            %% "slick"                         % V.slick
-    val slickJoda               = "com.github.tototoshi"          %% "slick-joda-mapper"             % "2.0.0"
-    val slickPg                 = "com.github.tminglei"           %% "slick-pg"                      % "0.9.0"
+    val slickHikariCP           = "com.typesafe.slick"            %% "slick-hikaricp"                % V.slick
+    val slickJoda               = "com.github.tototoshi"          %% "slick-joda-mapper"             % "2.1.0"
+    val slickPg                 = "com.github.tminglei"           %% "slick-pg"                      % V.slickPg
+    val slickPgDate2            = "com.github.tminglei"           %% "slick-pg_date2"                % V.slickPg
+    val slickPgJoda             = "com.github.tminglei"           %% "slick-pg_joda-time"            % V.slickPg
     val slickTestkit            = "com.typesafe.slick"            %% "slick-testkit"                 % V.slick
     val flywayCore              = "org.flywaydb"                  %  "flyway-core"                   % "3.1"
     val hikariCP                = "com.zaxxer"                    %  "HikariCP"                      % "2.3.5"
@@ -149,7 +153,7 @@ object Dependencies {
 
   val sessionMessages = Seq(akkaActor)
 
-  val persist = shared ++ Seq(akkaActor, apacheCommonsCodec, postgresJdbc, slick, slickJoda, slickPg, slickTestkit, flywayCore, hikariCP, jodaTime, jodaConvert)
+  val persist = shared ++ Seq(akkaActor, apacheCommonsCodec, postgresJdbc, slick, slickHikariCP, slickJoda, slickPg, slickPgDate2, slickPgJoda, slickTestkit, flywayCore, hikariCP, jodaTime, jodaConvert)
 
   val presences = shared :+ akkaContrib
 
@@ -169,7 +173,7 @@ object Dependencies {
 
   val dashboard = shared :+ scalazCore
 
-  val notifications = shared ++ Seq(akkaContrib, slick)
+  val notifications = shared ++ Seq(akkaContrib)
 
   val runtime = shared ++ Seq(akkaActor, akkaHttp, akkaStream, akkaPersistenceJdbc, caffeine, cats, concmap, jodaConvert, jodaTime, libPhoneNumber, scalapbSer, scalazCore, akkaTestkit % "test", scalatest % "test")
 

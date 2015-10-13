@@ -6,7 +6,8 @@ import com.typesafe.config.{ Config, ConfigFactory }
 import im.actor.server.JNDI
 import org.flywaydb.core.Flyway
 import slick.driver.PostgresDriver.api.Database
-import slick.jdbc.{ HikariCPJdbcDataSource, JdbcDataSource }
+import slick.jdbc.hikaricp.HikariCPJdbcDataSource
+import slick.jdbc.JdbcDataSource
 
 import scala.util.Try
 
@@ -51,7 +52,7 @@ object DbExtension extends ExtensionId[DbExtensionImpl] with ExtensionIdProvider
       s"""
         |url: "jdbc:postgresql://"${host}":"${port}"/"${db}
       """.stripMargin
-    )).resolve(), null, "main")
+    )).resolve(), null, "main", null)
   }
 
   private def initDb(ds: HikariCPJdbcDataSource): Database = {
